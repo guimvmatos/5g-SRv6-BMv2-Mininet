@@ -1,0 +1,198 @@
+tables {
+  preamble {
+    id: 33581483
+    name: "MyIngress.ipv6_outer_lpm"
+    alias: "ipv6_outer_lpm"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6_outer.dst_addr"
+    bitwidth: 128
+    match_type: LPM
+  }
+  action_refs {
+    id: 16798987
+  }
+  action_refs {
+    id: 16805608
+  }
+  action_refs {
+    id: 16800567
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 33560116
+    name: "MyIngress.teid_exact"
+    alias: "teid_exact"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.gtp.teid"
+    bitwidth: 32
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 2
+    name: "hdr.pdu_container.qosid"
+    bitwidth: 6
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 3
+    name: "hdr.ipv6_inner.dst_addr"
+    bitwidth: 128
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 4
+    name: "hdr.ipv6_inner.src_addr"
+    bitwidth: 128
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 5
+    name: "hdr.ipv6_inner.next_hdr"
+    bitwidth: 8
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 6
+    name: "hdr.tcp_inner.dstPort"
+    bitwidth: 16
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 7
+    name: "hdr.tcp_inner.srcPort"
+    bitwidth: 16
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 8
+    name: "hdr.udp_inner.dport"
+    bitwidth: 16
+    match_type: TERNARY
+  }
+  match_fields {
+    id: 9
+    name: "hdr.udp_inner.sport"
+    bitwidth: 16
+    match_type: TERNARY
+  }
+  action_refs {
+    id: 16827992
+  }
+  action_refs {
+    id: 16795776
+  }
+  action_refs {
+    id: 16800567
+    annotations: "@defaultonly()"
+  }
+  size: 1024
+}
+tables {
+  preamble {
+    id: 33591547
+    name: "MyIngress.my_sid"
+    alias: "my_sid"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6_outer.dst_addr"
+    bitwidth: 128
+    match_type: LPM
+  }
+  action_refs {
+    id: 16801888
+  }
+  action_refs {
+    id: 16800567
+    annotations: "@defaultonly()"
+  }
+  size: 1024
+}
+actions {
+  preamble {
+    id: 16800567
+    name: "NoAction"
+    alias: "NoAction"
+  }
+}
+actions {
+  preamble {
+    id: 16805608
+    name: "MyIngress.drop"
+    alias: "drop"
+  }
+}
+actions {
+  preamble {
+    id: 16801888
+    name: "MyIngress.srv6_pop"
+    alias: "srv6_pop"
+  }
+  params {
+    id: 1
+    name: "dst"
+    bitwidth: 128
+  }
+}
+actions {
+  preamble {
+    id: 16798987
+    name: "MyIngress.ipv6_forward"
+    alias: "ipv6_forward"
+  }
+  params {
+    id: 1
+    name: "dstAddr"
+    bitwidth: 48
+  }
+  params {
+    id: 2
+    name: "port"
+    bitwidth: 9
+  }
+}
+actions {
+  preamble {
+    id: 16827992
+    name: "MyIngress.srv6_t_insert_2"
+    alias: "srv6_t_insert_2"
+  }
+  params {
+    id: 1
+    name: "s1"
+    bitwidth: 128
+  }
+  params {
+    id: 2
+    name: "s2"
+    bitwidth: 128
+  }
+}
+actions {
+  preamble {
+    id: 16795776
+    name: "MyIngress.srv6_t_insert_3"
+    alias: "srv6_t_insert_3"
+  }
+  params {
+    id: 1
+    name: "s1"
+    bitwidth: 128
+  }
+  params {
+    id: 2
+    name: "s2"
+    bitwidth: 128
+  }
+  params {
+    id: 3
+    name: "s3"
+    bitwidth: 128
+  }
+}

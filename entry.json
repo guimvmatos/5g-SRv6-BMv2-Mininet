@@ -1,0 +1,1652 @@
+{
+  "program" : "./entry.p4i",
+  "__meta__" : {
+    "version" : [2, 7],
+    "compiler" : "https://github.com/p4lang/p4c"
+  },
+  "header_types" : [
+    {
+      "name" : "scalars_0",
+      "id" : 0,
+      "fields" : [
+        ["metadata.next_srv6_sid", 128, false]
+      ]
+    },
+    {
+      "name" : "ethernet_t",
+      "id" : 1,
+      "fields" : [
+        ["dstAddr", 48, false],
+        ["srcAddr", 48, false],
+        ["etherType", 16, false]
+      ]
+    },
+    {
+      "name" : "ipv6_t",
+      "id" : 2,
+      "fields" : [
+        ["version", 4, false],
+        ["traffic_class", 8, false],
+        ["flow_label", 20, false],
+        ["payload_len", 16, false],
+        ["next_hdr", 8, false],
+        ["hop_limit", 8, false],
+        ["src_addr", 128, false],
+        ["dst_addr", 128, false]
+      ]
+    },
+    {
+      "name" : "srv6_t",
+      "id" : 3,
+      "fields" : [
+        ["next_hdr", 8, false],
+        ["hdr_ext_len", 8, false],
+        ["routing_type", 8, false],
+        ["segment_left", 8, false],
+        ["last_entry", 8, false],
+        ["flags", 8, false],
+        ["tag", 16, false]
+      ]
+    },
+    {
+      "name" : "udp_t",
+      "id" : 4,
+      "fields" : [
+        ["sport", 16, false],
+        ["dport", 16, false],
+        ["len", 16, false],
+        ["checksum", 16, false]
+      ]
+    },
+    {
+      "name" : "gtp_t",
+      "id" : 5,
+      "fields" : [
+        ["version_field_id", 3, false],
+        ["proto_type_id", 1, false],
+        ["spare", 1, false],
+        ["extension_header_flag_id", 1, false],
+        ["sequence_number_flag_id", 1, false],
+        ["npdu_number_flag_id", 1, false],
+        ["msgtype", 8, false],
+        ["msglen", 16, false],
+        ["teid", 32, false]
+      ]
+    },
+    {
+      "name" : "srv6_list_t",
+      "id" : 6,
+      "fields" : [
+        ["segment_id", 128, false]
+      ]
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 7,
+      "fields" : [
+        ["ingress_port", 9, false],
+        ["egress_spec", 9, false],
+        ["egress_port", 9, false],
+        ["clone_spec", 32, false],
+        ["instance_type", 32, false],
+        ["drop", 1, false],
+        ["recirculate_port", 16, false],
+        ["packet_length", 32, false],
+        ["enq_timestamp", 32, false],
+        ["enq_qdepth", 19, false],
+        ["deq_timedelta", 32, false],
+        ["deq_qdepth", 19, false],
+        ["ingress_global_timestamp", 48, false],
+        ["egress_global_timestamp", 48, false],
+        ["lf_field_list", 32, false],
+        ["mcast_grp", 16, false],
+        ["resubmit_flag", 32, false],
+        ["egress_rid", 16, false],
+        ["checksum_error", 1, false],
+        ["recirculate_flag", 32, false],
+        ["_padding", 5, false]
+      ]
+    }
+  ],
+  "headers" : [
+    {
+      "name" : "scalars",
+      "id" : 0,
+      "header_type" : "scalars_0",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "standard_metadata",
+      "id" : 1,
+      "header_type" : "standard_metadata",
+      "metadata" : true,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ethernet",
+      "id" : 2,
+      "header_type" : "ethernet_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ipv6_outer",
+      "id" : 3,
+      "header_type" : "ipv6_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "srv6",
+      "id" : 4,
+      "header_type" : "srv6_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "udp",
+      "id" : 5,
+      "header_type" : "udp_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "gtp",
+      "id" : 6,
+      "header_type" : "gtp_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "ipv6_inner",
+      "id" : 7,
+      "header_type" : "ipv6_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "srv6_list[0]",
+      "id" : 8,
+      "header_type" : "srv6_list_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "srv6_list[1]",
+      "id" : 9,
+      "header_type" : "srv6_list_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "srv6_list[2]",
+      "id" : 10,
+      "header_type" : "srv6_list_t",
+      "metadata" : false,
+      "pi_omit" : true
+    },
+    {
+      "name" : "srv6_list[3]",
+      "id" : 11,
+      "header_type" : "srv6_list_t",
+      "metadata" : false,
+      "pi_omit" : true
+    }
+  ],
+  "header_stacks" : [
+    {
+      "name" : "srv6_list",
+      "id" : 0,
+      "header_type" : "srv6_list_t",
+      "size" : 4,
+      "header_ids" : [8, 9, 10, 11]
+    }
+  ],
+  "header_union_types" : [],
+  "header_unions" : [],
+  "header_union_stacks" : [],
+  "field_lists" : [],
+  "errors" : [
+    ["NoError", 1],
+    ["PacketTooShort", 2],
+    ["NoMatch", 3],
+    ["StackOutOfBounds", 4],
+    ["HeaderTooShort", 5],
+    ["ParserTimeout", 6]
+  ],
+  "enums" : [],
+  "parsers" : [
+    {
+      "name" : "parser",
+      "id" : 0,
+      "init_state" : "start",
+      "parse_states" : [
+        {
+          "name" : "start",
+          "id" : 0,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ethernet"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x86dd",
+              "mask" : null,
+              "next_state" : "parse_ipv6_outer"
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "etherType"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_ipv6_outer",
+          "id" : 1,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "ipv6_outer"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x11",
+              "mask" : null,
+              "next_state" : "parse_udp"
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x2b",
+              "mask" : null,
+              "next_state" : "parse_srv6"
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "next_hdr"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_srv6",
+          "id" : 2,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "srv6"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "value" : "default",
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : []
+        },
+        {
+          "name" : "parse_udp",
+          "id" : 3,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "udp"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x0868",
+              "mask" : null,
+              "next_state" : "parse_gtp"
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["udp", "dport"]
+            }
+          ]
+        },
+        {
+          "name" : "parse_gtp",
+          "id" : 4,
+          "parser_ops" : [
+            {
+              "parameters" : [
+                {
+                  "type" : "regular",
+                  "value" : "gtp"
+                }
+              ],
+              "op" : "extract"
+            }
+          ],
+          "transitions" : [
+            {
+              "type" : "hexstr",
+              "value" : "0x00000020",
+              "mask" : null,
+              "next_state" : null
+            }
+          ],
+          "transition_key" : [
+            {
+              "type" : "field",
+              "value" : ["gtp", "teid"]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "parse_vsets" : [],
+  "deparsers" : [
+    {
+      "name" : "deparser",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "entry.p4",
+        "line" : 329,
+        "column" : 8,
+        "source_fragment" : "MyDeparser"
+      },
+      "order" : ["ethernet", "ipv6_outer", "srv6", "srv6_list[0]", "srv6_list[1]", "srv6_list[2]", "srv6_list[3]", "udp", "gtp", "ipv6_inner"]
+    }
+  ],
+  "meter_arrays" : [],
+  "counter_arrays" : [],
+  "register_arrays" : [],
+  "calculations" : [],
+  "learn_lists" : [],
+  "actions" : [
+    {
+      "name" : "NoAction",
+      "id" : 0,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 1,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "NoAction",
+      "id" : 2,
+      "runtime_data" : [],
+      "primitives" : []
+    },
+    {
+      "name" : "MyIngress.drop",
+      "id" : 3,
+      "runtime_data" : [],
+      "primitives" : [
+        {
+          "op" : "drop",
+          "parameters" : [],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 176,
+            "column" : 8,
+            "source_fragment" : "mark_to_drop()"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.srv6_pop",
+      "id" : 4,
+      "runtime_data" : [
+        {
+          "name" : "dst",
+          "bitwidth" : 128
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "next_hdr"]
+            },
+            {
+              "type" : "field",
+              "value" : ["srv6", "next_hdr"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 180,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.next_hdr = hdr.srv6.next_hdr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "payload_len"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv6_outer", "payload_len"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0xffc8"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 181,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.payload_len = hdr.ipv6_outer.payload_len - 56"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "dst_addr"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 182,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.dst_addr = dst"
+          }
+        },
+        {
+          "op" : "remove_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[0]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 184,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[0].setInvalid()"
+          }
+        },
+        {
+          "op" : "remove_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[1]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 185,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[1].setInvalid()"
+          }
+        },
+        {
+          "op" : "remove_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[2]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 186,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[2].setInvalid()"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "udp"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 189,
+            "column" : 8,
+            "source_fragment" : "hdr.udp.setValid()"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "ipv6_inner"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 190,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_inner.setValid()"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "gtp"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 191,
+            "column" : 8,
+            "source_fragment" : "hdr.gtp.setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["gtp", "spare"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 192,
+            "column" : 8,
+            "source_fragment" : "hdr.gtp.spare = 1"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.ipv6_forward",
+      "id" : 5,
+      "runtime_data" : [
+        {
+          "name" : "dstAddr",
+          "bitwidth" : 48
+        },
+        {
+          "name" : "port",
+          "bitwidth" : 9
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["standard_metadata", "egress_spec"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 196,
+            "column" : 8,
+            "source_fragment" : "standard_metadata.egress_spec = port"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "srcAddr"]
+            },
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dstAddr"]
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 197,
+            "column" : 8,
+            "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ethernet", "dstAddr"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 198,
+            "column" : 8,
+            "source_fragment" : "hdr.ethernet.dstAddr = dstAddr"
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.srv6_t_insert_2",
+      "id" : 6,
+      "runtime_data" : [
+        {
+          "name" : "s1",
+          "bitwidth" : 128
+        },
+        {
+          "name" : "s2",
+          "bitwidth" : 128
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "payload_len"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv6_outer", "payload_len"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0x0028"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 215,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.payload_len = hdr.ipv6_outer.payload_len + 40"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[0]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 216,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[0].setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6_list[0]", "segment_id"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 217,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[0].segment_id = s1"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[1]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 218,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[1].setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6_list[1]", "segment_id"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 219,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[1].segment_id = s2"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "dst_addr"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 220,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.dst_addr = s2"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 202,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "next_hdr"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x11"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 15,
+            "column" : 24,
+            "source_fragment" : "17; ..."
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "hdr_ext_len"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x04"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 204,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.hdr_ext_len = num_segments * 2"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "routing_type"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x04"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 205,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.routing_type = 4"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "segment_left"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 206,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.segment_left = num_segments -1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "last_entry"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x01"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 207,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.last_entry = num_segments - 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "flags"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 208,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.flags = 0"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "tag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 209,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.tag = 0"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "next_hdr"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x2b"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 17,
+            "column" : 25,
+            "source_fragment" : "43; ..."
+          }
+        }
+      ]
+    },
+    {
+      "name" : "MyIngress.srv6_t_insert_3",
+      "id" : 7,
+      "runtime_data" : [
+        {
+          "name" : "s1",
+          "bitwidth" : 128
+        },
+        {
+          "name" : "s2",
+          "bitwidth" : 128
+        },
+        {
+          "name" : "s3",
+          "bitwidth" : 128
+        }
+      ],
+      "primitives" : [
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "payload_len"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv6_outer", "payload_len"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0x0038"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 225,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.payload_len = hdr.ipv6_outer.payload_len + 56"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[0]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 226,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[0].setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6_list[0]", "segment_id"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 0
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 227,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[0].segment_id = s1"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[1]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 228,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[1].setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6_list[1]", "segment_id"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 1
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 229,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[1].segment_id = s2"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6_list[2]"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 230,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[2].setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6_list[2]", "segment_id"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 2
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 231,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6_list[2].segment_id = s3"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "dst_addr"]
+            },
+            {
+              "type" : "runtime_data",
+              "value" : 2
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 232,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.dst_addr = s3"
+          }
+        },
+        {
+          "op" : "add_header",
+          "parameters" : [
+            {
+              "type" : "header",
+              "value" : "srv6"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 202,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.setValid()"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "next_hdr"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x11"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 15,
+            "column" : 24,
+            "source_fragment" : "17; ..."
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "hdr_ext_len"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x06"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 204,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.hdr_ext_len = num_segments * 2"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "routing_type"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x04"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 205,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.routing_type = 4"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "segment_left"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x02"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 206,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.segment_left = num_segments -1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "last_entry"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x02"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 207,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.last_entry = num_segments - 1"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "flags"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x00"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 208,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.flags = 0"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["srv6", "tag"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x0000"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 209,
+            "column" : 8,
+            "source_fragment" : "hdr.srv6.tag = 0"
+          }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "next_hdr"]
+            },
+            {
+              "type" : "hexstr",
+              "value" : "0x2b"
+            }
+          ],
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 17,
+            "column" : 25,
+            "source_fragment" : "43; ..."
+          }
+        }
+      ]
+    }
+  ],
+  "pipelines" : [
+    {
+      "name" : "ingress",
+      "id" : 0,
+      "source_info" : {
+        "filename" : "entry.p4",
+        "line" : 172,
+        "column" : 8,
+        "source_fragment" : "MyIngress"
+      },
+      "init_table" : "node_2",
+      "tables" : [
+        {
+          "name" : "MyIngress.teid_exact",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 252,
+            "column" : 10,
+            "source_fragment" : "teid_exact"
+          },
+          "key" : [
+            {
+              "match_type" : "exact",
+              "name" : "hdr.gtp.teid",
+              "target" : ["gtp", "teid"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "exact",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [6, 7, 1],
+          "actions" : ["MyIngress.srv6_t_insert_2", "MyIngress.srv6_t_insert_3", "NoAction"],
+          "base_default_next" : "MyIngress.ipv6_outer_lpm",
+          "next_tables" : {
+            "MyIngress.srv6_t_insert_2" : "MyIngress.ipv6_outer_lpm",
+            "MyIngress.srv6_t_insert_3" : "MyIngress.ipv6_outer_lpm",
+            "NoAction" : "MyIngress.ipv6_outer_lpm"
+          },
+          "default_entry" : {
+            "action_id" : 1,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.my_sid",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 264,
+            "column" : 10,
+            "source_fragment" : "my_sid"
+          },
+          "key" : [
+            {
+              "match_type" : "lpm",
+              "name" : "hdr.ipv6_outer.dst_addr",
+              "target" : ["ipv6_outer", "dst_addr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "lpm",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [4, 2],
+          "actions" : ["MyIngress.srv6_pop", "NoAction"],
+          "base_default_next" : "MyIngress.ipv6_outer_lpm",
+          "next_tables" : {
+            "MyIngress.srv6_pop" : "MyIngress.ipv6_outer_lpm",
+            "NoAction" : "MyIngress.ipv6_outer_lpm"
+          },
+          "default_entry" : {
+            "action_id" : 2,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        },
+        {
+          "name" : "MyIngress.ipv6_outer_lpm",
+          "id" : 2,
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 238,
+            "column" : 10,
+            "source_fragment" : "ipv6_outer_lpm"
+          },
+          "key" : [
+            {
+              "match_type" : "lpm",
+              "name" : "hdr.ipv6_outer.dst_addr",
+              "target" : ["ipv6_outer", "dst_addr"],
+              "mask" : null
+            }
+          ],
+          "match_type" : "lpm",
+          "type" : "simple",
+          "max_size" : 1024,
+          "with_counters" : false,
+          "support_timeout" : false,
+          "direct_meters" : null,
+          "action_ids" : [5, 3, 0],
+          "actions" : ["MyIngress.ipv6_forward", "MyIngress.drop", "NoAction"],
+          "base_default_next" : null,
+          "next_tables" : {
+            "MyIngress.ipv6_forward" : null,
+            "MyIngress.drop" : null,
+            "NoAction" : null
+          },
+          "default_entry" : {
+            "action_id" : 3,
+            "action_const" : false,
+            "action_data" : [],
+            "action_entry_const" : false
+          }
+        }
+      ],
+      "action_profiles" : [],
+      "conditionals" : [
+        {
+          "name" : "node_2",
+          "id" : 0,
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 296,
+            "column" : 12,
+            "source_fragment" : "!hdr.srv6.isValid() && hdr.gtp.spare == 0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "and",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "not",
+                  "left" : null,
+                  "right" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "d2b",
+                      "left" : null,
+                      "right" : {
+                        "type" : "field",
+                        "value" : ["srv6", "$valid$"]
+                      }
+                    }
+                  }
+                }
+              },
+              "right" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "==",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["gtp", "spare"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x00"
+                  }
+                }
+              }
+            }
+          },
+          "true_next" : "MyIngress.teid_exact",
+          "false_next" : "node_4"
+        },
+        {
+          "name" : "node_4",
+          "id" : 1,
+          "source_info" : {
+            "filename" : "entry.p4",
+            "line" : 298,
+            "column" : 19,
+            "source_fragment" : "hdr.srv6.isValid() && hdr.srv6.segment_left == 0"
+          },
+          "expression" : {
+            "type" : "expression",
+            "value" : {
+              "op" : "and",
+              "left" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "d2b",
+                  "left" : null,
+                  "right" : {
+                    "type" : "field",
+                    "value" : ["srv6", "$valid$"]
+                  }
+                }
+              },
+              "right" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "==",
+                  "left" : {
+                    "type" : "field",
+                    "value" : ["srv6", "segment_left"]
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0x00"
+                  }
+                }
+              }
+            }
+          },
+          "true_next" : "MyIngress.my_sid",
+          "false_next" : "MyIngress.ipv6_outer_lpm"
+        }
+      ]
+    },
+    {
+      "name" : "egress",
+      "id" : 1,
+      "source_info" : {
+        "filename" : "entry.p4",
+        "line" : 311,
+        "column" : 8,
+        "source_fragment" : "MyEgress"
+      },
+      "init_table" : null,
+      "tables" : [],
+      "action_profiles" : [],
+      "conditionals" : []
+    }
+  ],
+  "checksums" : [],
+  "force_arith" : [],
+  "extern_instances" : [],
+  "field_aliases" : [
+    [
+      "queueing_metadata.enq_timestamp",
+      ["standard_metadata", "enq_timestamp"]
+    ],
+    [
+      "queueing_metadata.enq_qdepth",
+      ["standard_metadata", "enq_qdepth"]
+    ],
+    [
+      "queueing_metadata.deq_timedelta",
+      ["standard_metadata", "deq_timedelta"]
+    ],
+    [
+      "queueing_metadata.deq_qdepth",
+      ["standard_metadata", "deq_qdepth"]
+    ],
+    [
+      "intrinsic_metadata.ingress_global_timestamp",
+      ["standard_metadata", "ingress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.egress_global_timestamp",
+      ["standard_metadata", "egress_global_timestamp"]
+    ],
+    [
+      "intrinsic_metadata.lf_field_list",
+      ["standard_metadata", "lf_field_list"]
+    ],
+    [
+      "intrinsic_metadata.mcast_grp",
+      ["standard_metadata", "mcast_grp"]
+    ],
+    [
+      "intrinsic_metadata.resubmit_flag",
+      ["standard_metadata", "resubmit_flag"]
+    ],
+    [
+      "intrinsic_metadata.egress_rid",
+      ["standard_metadata", "egress_rid"]
+    ],
+    [
+      "intrinsic_metadata.recirculate_flag",
+      ["standard_metadata", "recirculate_flag"]
+    ]
+  ]
+}

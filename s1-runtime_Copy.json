@@ -1,0 +1,80 @@
+{
+  "target": "bmv2",
+  "p4info": "build/entry.p4info",
+  "bmv2_json": "build/entry.json",
+  "table_entries": [
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "default_action": true,
+      "action_name": "MyIngress.drop",
+      "action_params": { }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0001", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:00:01:01",
+        "port": 1
+      }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0002", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:02:02:00",
+        "port": 2
+      }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0003", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:03:03:00",
+        "port": 3
+      }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0005", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:02:02:00",
+        "port": 2
+      }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0006", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:03:03:00",
+        "port": 3
+      }
+    },
+
+    {
+      "table": "MyIngress.teid_exact",
+      "match": {
+        "hdr.gtp.teid": [32]
+      },
+      "action_name": "MyIngress.srv6_t_insert_2",
+      "action_params": {
+        "s2": "2001:0DB8:AC10:FE01:0000:0000:0000:0002",
+        "s1": "2001:0DB8:AC10:FE01:0000:0000:0000:0003"
+      }
+    }
+  ]
+}

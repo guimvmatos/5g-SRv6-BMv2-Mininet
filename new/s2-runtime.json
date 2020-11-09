@@ -1,0 +1,88 @@
+{
+  "target": "bmv2",
+  "p4info": "build/srv6.p4info",
+  "bmv2_json": "build/srv6.json",
+  "table_entries": [
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "default_action": true,
+      "action_name": "MyIngress.drop",
+      "action_params": { }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0001", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:01:02:00",
+        "port": 2
+      }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0002", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:00:02:02",
+        "port": 1
+      }
+    },
+    {
+      "table": "MyIngress.ipv6_outer_lpm",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0003", 128]
+      },
+      "action_name": "MyIngress.ipv6_forward",
+      "action_params": {
+        "dstAddr": "00:00:00:03:03:00",
+        "port": 3
+      }
+    },
+    {
+      "table": "MyIngress.teid_exact",
+      "match": {
+        "hdr.gtp.teid": [32]
+      },
+      "action_name": "MyIngress.srv6_t_insert_2",
+      "action_params": {
+        "s1": "2001:0DB8:AC10:FE01:0000:0000:0000:0003",
+        "s2": "2001:0DB8:AC10:FE01:0000:0000:0000:0002"
+      }
+    },
+   {
+      "table": "MyIngress.teid_exact",
+      "match": {
+        "hdr.gtp.teid": [31]
+      },
+      "action_name": "MyIngress.srv6_t_insert_3",
+      "action_params": {
+        "s1": "2001:0DB8:AC10:FE01:0000:0000:0000:0003",
+        "s2": "2001:0DB8:AC10:FE01:0000:0000:0000:0002",
+        "s3": "2001:0DB8:AC10:FE01:0000:0000:0000:0001"
+      }
+    },
+    {
+      "table": "MyIngress.srv6_my_sid",
+      "match": {
+        "hdr.ipv6_outer.dst_addr": ["2001:0DB8:AC10:FE01:0000:0000:0000:0005", 128]
+      },
+      "action_name": "MyIngress.srv6_end",
+      "action_params": {
+      }
+    },
+    {
+      "table": "MyIngress.l2_my_station",
+      "match": {
+        "hdr.ethernet.dstAddr": ["00:00:00:02:02:00", 32]
+      },
+      "action_name": "",
+      "action_params": {
+      }
+    }
+    
+  ]
+}

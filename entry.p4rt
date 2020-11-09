@@ -1,0 +1,13 @@
+k
+/«ÓMyIngress.ipv6_outer_lpmipv6_outer_lpm hdr.ipv6_outer.dst_addr €(‹ªèİ·¶@€g
+'´¬€MyIngress.teid_exact
+teid_exacthdr.gtp.teid  (ØŒƒ€‘·¶@defaultonly()@€d
+û¡‚MyIngress.my_sidmy_sid hdr.ipv6_outer.dst_addr €(àÀ·¶@defaultonly()@€
+·¶NoActionNoAction
+èİMyIngress.dropdrop1
+#àÀMyIngress.srv6_popsrv6_pop
+dst €H
++‹ªMyIngress.ipv6_forwardipv6_forwarddstAddr 0
+port 	I
+1ØŒƒMyIngress.srv6_t_insert_2srv6_t_insert_2	s1 €	s2 €T
+1€‘MyIngress.srv6_t_insert_3srv6_t_insert_3	s1 €	s2 €	s3 €
