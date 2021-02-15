@@ -1,5 +1,25 @@
 tables {
   preamble {
+    id: 33587431
+    name: "MyIngress.pop"
+    alias: "pop"
+  }
+  match_fields {
+    id: 1
+    name: "hdr.ipv6_outer.dst_addr"
+    bitwidth: 128
+    match_type: EXACT
+  }
+  action_refs {
+    id: 16801888
+  }
+  action_refs {
+    id: 16805608
+  }
+  size: 1024
+}
+tables {
+  preamble {
     id: 33581483
     name: "MyIngress.ipv6_outer_lpm"
     alias: "ipv6_outer_lpm"
@@ -8,7 +28,7 @@ tables {
     id: 1
     name: "hdr.ipv6_outer.dst_addr"
     bitwidth: 128
-    match_type: LPM
+    match_type: EXACT
   }
   action_refs {
     id: 16798987
@@ -82,31 +102,10 @@ tables {
     match_type: TERNARY
   }
   action_refs {
-    id: 16827992
+    id: 16799084
   }
   action_refs {
-    id: 16795776
-  }
-  action_refs {
-    id: 16800567
-    annotations: "@defaultonly()"
-  }
-  size: 1024
-}
-tables {
-  preamble {
-    id: 33591547
-    name: "MyIngress.my_sid"
-    alias: "my_sid"
-  }
-  match_fields {
-    id: 1
-    name: "hdr.ipv6_outer.dst_addr"
-    bitwidth: 128
-    match_type: LPM
-  }
-  action_refs {
-    id: 16801888
+    id: 16804784
   }
   action_refs {
     id: 16800567
@@ -130,18 +129,6 @@ actions {
 }
 actions {
   preamble {
-    id: 16801888
-    name: "MyIngress.srv6_pop"
-    alias: "srv6_pop"
-  }
-  params {
-    id: 1
-    name: "dst"
-    bitwidth: 128
-  }
-}
-actions {
-  preamble {
     id: 16798987
     name: "MyIngress.ipv6_forward"
     alias: "ipv6_forward"
@@ -159,9 +146,21 @@ actions {
 }
 actions {
   preamble {
-    id: 16827992
-    name: "MyIngress.srv6_t_insert_2"
-    alias: "srv6_t_insert_2"
+    id: 16801888
+    name: "MyIngress.srv6_pop"
+    alias: "srv6_pop"
+  }
+  params {
+    id: 1
+    name: "hop"
+    bitwidth: 8
+  }
+}
+actions {
+  preamble {
+    id: 16799084
+    name: "MyIngress.build_srv62"
+    alias: "build_srv62"
   }
   params {
     id: 1
@@ -176,22 +175,17 @@ actions {
 }
 actions {
   preamble {
-    id: 16795776
-    name: "MyIngress.srv6_t_insert_3"
-    alias: "srv6_t_insert_3"
+    id: 16804784
+    name: "MyIngress.build_srv63"
+    alias: "build_srv63"
   }
   params {
     id: 1
-    name: "s1"
-    bitwidth: 128
-  }
-  params {
-    id: 2
     name: "s2"
     bitwidth: 128
   }
   params {
-    id: 3
+    id: 2
     name: "s3"
     bitwidth: 128
   }
