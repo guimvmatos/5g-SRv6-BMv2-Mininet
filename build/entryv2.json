@@ -608,7 +608,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "entryv2.p4",
-        "line" : 364,
+        "line" : 365,
         "column" : 8,
         "source_fragment" : "MyDeparser"
       },
@@ -698,25 +698,6 @@
             "line" : 234,
             "column" : 8,
             "source_fragment" : "standard_metadata.egress_spec = port"
-          }
-        },
-        {
-          "op" : "assign",
-          "parameters" : [
-            {
-              "type" : "field",
-              "value" : ["ethernet", "srcAddr"]
-            },
-            {
-              "type" : "field",
-              "value" : ["ethernet", "dstAddr"]
-            }
-          ],
-          "source_info" : {
-            "filename" : "entryv2.p4",
-            "line" : 235,
-            "column" : 8,
-            "source_fragment" : "hdr.ethernet.srcAddr = hdr.ethernet.dstAddr"
           }
         },
         {
@@ -1362,6 +1343,48 @@
             "column" : 8,
             "source_fragment" : "hdr.ipv6_outer.dst_addr = s3"
           }
+        },
+        {
+          "op" : "assign",
+          "parameters" : [
+            {
+              "type" : "field",
+              "value" : ["ipv6_outer", "payload_len"]
+            },
+            {
+              "type" : "expression",
+              "value" : {
+                "type" : "expression",
+                "value" : {
+                  "op" : "&",
+                  "left" : {
+                    "type" : "expression",
+                    "value" : {
+                      "op" : "+",
+                      "left" : {
+                        "type" : "field",
+                        "value" : ["ipv6_outer", "payload_len"]
+                      },
+                      "right" : {
+                        "type" : "hexstr",
+                        "value" : "0x0038"
+                      }
+                    }
+                  },
+                  "right" : {
+                    "type" : "hexstr",
+                    "value" : "0xffff"
+                  }
+                }
+              }
+            }
+          ],
+          "source_info" : {
+            "filename" : "entryv2.p4",
+            "line" : 288,
+            "column" : 8,
+            "source_fragment" : "hdr.ipv6_outer.payload_len = hdr.ipv6_outer.payload_len + 56"
+          }
         }
       ]
     }
@@ -1383,7 +1406,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 317,
+            "line" : 318,
             "column" : 10,
             "source_fragment" : "teid_exact"
           },
@@ -1421,7 +1444,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 292,
+            "line" : 293,
             "column" : 10,
             "source_fragment" : "pop"
           },
@@ -1458,7 +1481,7 @@
           "id" : 2,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 305,
+            "line" : 306,
             "column" : 10,
             "source_fragment" : "ipv6_outer_lpm"
           },
@@ -1499,7 +1522,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 333,
+            "line" : 334,
             "column" : 12,
             "source_fragment" : "!hdr.srv63.isValid() && hdr.gtp.spare == 0"
           },
@@ -1549,7 +1572,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 335,
+            "line" : 336,
             "column" : 19,
             "source_fragment" : "hdr.srv63.isValid() && hdr.srv63.segment_left == 0"
           },
@@ -1594,7 +1617,7 @@
       "id" : 1,
       "source_info" : {
         "filename" : "entryv2.p4",
-        "line" : 346,
+        "line" : 347,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },
