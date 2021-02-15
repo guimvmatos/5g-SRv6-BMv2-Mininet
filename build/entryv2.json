@@ -608,7 +608,7 @@
       "id" : 0,
       "source_info" : {
         "filename" : "entryv2.p4",
-        "line" : 371,
+        "line" : 364,
         "column" : 8,
         "source_fragment" : "MyDeparser"
       },
@@ -1389,61 +1389,13 @@
           },
           "key" : [
             {
-              "match_type" : "ternary",
+              "match_type" : "exact",
               "name" : "hdr.gtp.teid",
               "target" : ["gtp", "teid"],
               "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.pdu_container.qosid",
-              "target" : ["pdu_container", "qosid"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.ipv6_inner.dst_addr",
-              "target" : ["ipv6_inner", "dst_addr"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.ipv6_inner.src_addr",
-              "target" : ["ipv6_inner", "src_addr"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.ipv6_inner.next_hdr",
-              "target" : ["ipv6_inner", "next_hdr"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.tcp_inner.dstPort",
-              "target" : ["tcp_inner", "dstPort"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.tcp_inner.srcPort",
-              "target" : ["tcp_inner", "srcPort"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.udp_inner.dport",
-              "target" : ["udp_inner", "dport"],
-              "mask" : null
-            },
-            {
-              "match_type" : "ternary",
-              "name" : "hdr.udp_inner.sport",
-              "target" : ["udp_inner", "sport"],
-              "mask" : null
             }
           ],
-          "match_type" : "ternary",
+          "match_type" : "exact",
           "type" : "simple",
           "max_size" : 1024,
           "with_counters" : false,
@@ -1547,7 +1499,7 @@
           "id" : 0,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 340,
+            "line" : 333,
             "column" : 12,
             "source_fragment" : "!hdr.srv63.isValid() && hdr.gtp.spare == 0"
           },
@@ -1597,7 +1549,7 @@
           "id" : 1,
           "source_info" : {
             "filename" : "entryv2.p4",
-            "line" : 342,
+            "line" : 335,
             "column" : 19,
             "source_fragment" : "hdr.srv63.isValid() && hdr.srv63.segment_left == 0"
           },
@@ -1642,7 +1594,7 @@
       "id" : 1,
       "source_info" : {
         "filename" : "entryv2.p4",
-        "line" : 353,
+        "line" : 346,
         "column" : 8,
         "source_fragment" : "MyEgress"
       },
