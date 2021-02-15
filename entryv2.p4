@@ -316,15 +316,8 @@ control MyIngress(inout headers hdr,
     }
     table teid_exact {
         key = {
-            hdr.gtp.teid: ternary;
-            hdr.pdu_container.qosid: ternary;
-            hdr.ipv6_inner.dst_addr: ternary;
-            hdr.ipv6_inner.src_addr: ternary;
-            hdr.ipv6_inner.next_hdr: ternary;
-            hdr.tcp_inner.dstPort: ternary;
-            hdr.tcp_inner.srcPort: ternary;
-            hdr.udp_inner.dport: ternary;
-            hdr.udp_inner.sport: ternary;
+            hdr.gtp.teid: exact;
+
         }
         actions = {
             build_srv62;
